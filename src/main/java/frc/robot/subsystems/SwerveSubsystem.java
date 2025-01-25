@@ -135,11 +135,6 @@ public class SwerveSubsystem extends SubsystemBase {
     swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
   }
 
-
-  public void resetOdometry() {
-    swerveOdometry.resetPosition(getYaw(), getModulePositions(), getPose());
-  }
-
   public ChassisSpeeds getRobotRelativeSpeeds(){
     return Constants.SwerveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
   }
