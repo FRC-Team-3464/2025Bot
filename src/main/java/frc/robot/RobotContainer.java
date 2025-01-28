@@ -10,6 +10,8 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.IntakeCoral;
+import frc.robot.commands.ReverseCoralIntake;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -68,7 +70,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  
+    Constants.OperatorConstants.button1.whileTrue(new IntakeCoral());
+    Constants.OperatorConstants.button2.whileTrue(new ReverseCoralIntake());
+    
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
