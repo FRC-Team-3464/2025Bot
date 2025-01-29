@@ -27,7 +27,7 @@ public class AlgaeSubsystem extends SubsystemBase {
 
   private final DigitalInput stowLimit = new DigitalInput(7);
   private final DigitalInput algaeMaxLimit = new DigitalInput(8);
-  private final DigitalInput algaeSwitch = new DigitalInput(9);
+  private final DigitalInput algaeSensor = new DigitalInput(9);
   
   public static AlgaeSubsystem instance = new AlgaeSubsystem();
   
@@ -52,12 +52,31 @@ public class AlgaeSubsystem extends SubsystemBase {
     }
   }
 
+  public void RetractAlgaeIntake() {
+    if(stowLimit.get() == true) {
+      algaePivotMotor.set(0);
+    }
+    else {
+      algaePivotMotor.set(-1);
+    }
+  }
+
+  public void runPivotMotor(double speed) {
+    if (!(stowLimit.get() || (algaePivotMotor.get() < 0))) {
+      algaePivotMotor.set(speed);
+    }
+  }
+
   public void runAlgaeMotor(double speed) {
     algaeMotor.set(speed);
   }
 
   public double getAlgaePivotPosition() {
     return algaePivotEncoder.getPosition();
+  }
+
+  public double getAlgaeIntakePosition() {
+    return algaeEncoder.getPosition();
   }
 
   public boolean getStowLimit() {
@@ -71,7 +90,6 @@ public class AlgaeSubsystem extends SubsystemBase {
   public boolean getExtendedLimit() {
     return algaeMaxLimit.get();
   }
-
 
   @Override
   public void periodic() {

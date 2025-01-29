@@ -12,6 +12,9 @@ public class RunAlgaeIntake extends Command {
   /** Creates a new RunAlgaeIntake. */
   private AlgaeSubsystem algaeSub;
 
+  private boolean targetReached;
+  private double rotations;
+
   public RunAlgaeIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     algaeSub = AlgaeSubsystem.getInstance();
@@ -20,12 +23,23 @@ public class RunAlgaeIntake extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    targetReached = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     algaeSub.runAlgaeMotor(1);
+    if (algaeSub.getAlgaeSpeed() >= 2000) {
+      targetReached = true;
+    }
+    if (targetReached) {
+      if (algaeSub.getAlgaeSpeed() <= 1800) {
+        rotations = algaeSub.getAlgaeIntakePosition();
+      }
+    }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +51,6 @@ public class RunAlgaeIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return ((algaeSub.getAlgaeIntakePosition() - rotations) > 10);
   }
 }
