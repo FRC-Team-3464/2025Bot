@@ -28,6 +28,10 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  */
 public final class Constants {
 
+  public static class ElevatorConstants {
+    public static double kElevatorGearRatio = 0;
+  }
+
   public static class SwerveConstants {
 
     public static final IdleMode driveIdleMode = IdleMode.kBrake;

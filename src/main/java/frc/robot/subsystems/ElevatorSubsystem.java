@@ -16,6 +16,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ElevatorSubsystem. */
@@ -101,7 +102,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public double getElevatorHeight() {
     // gets elevator height in inches based on number of rotations of the duty cycle encoder
     double rotations = getElevatorPosition();
-    return (rotations/32);
+    return (rotations/Constants.ElevatorConstants.kElevatorGearRatio);
+    // change the kElevatorGearRatio later to get from CAD
   }
 
   public boolean getMaxElevatorLimit() {
