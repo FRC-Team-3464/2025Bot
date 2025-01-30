@@ -7,9 +7,11 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RunElevator;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.ElevatorToPosition;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -18,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -67,12 +70,20 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+      Constants.OperatorConstants.button7.onTrue(new ElevatorToPosition(0));
+      Constants.OperatorConstants.button8.onTrue(new ElevatorToPosition(10));
+      Constants.OperatorConstants.button9.onTrue(new ElevatorToPosition(20));
+      Constants.OperatorConstants.button10.onTrue(new ElevatorToPosition(30));
+      Constants.OperatorConstants.button11.onTrue(new ElevatorToPosition(40));
+      Constants.OperatorConstants.pancakeUp.whileTrue(new RunElevator(true));
+      Constants.OperatorConstants.pancakeDown.whileTrue(new RunElevator(false));
+
+      }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -60,6 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
   
   public void setElevateTarget(double target) {
+    // checking which direction the elevator has to travel in to reach the target parameter after accounting for limit switches
     if (getMinElevatorLimit()) {
       leftElevator.set(0);
     }
@@ -78,7 +79,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void runElevator(double speed) {
     if (getMinElevatorLimit()) {
       leftElevator.set(0);
-
     }
     else if (getMaxElevatorLimit()) {
       leftElevator.set(0);
@@ -89,26 +89,29 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public double getRelativeElevatorPosition() {
+    // gets number of rotations of left relative encoder
     return leftEncoder.getPosition();
   }
 
   public double getElevatorPosition() {
+    // gets elevator position based on number of rotations of duty cycle encoder
     return absElevatorEncoder.get();
   }
 
   public double getElevatorHeight() {
+    // gets elevator height in inches based on number of rotations of the duty cycle encoder
     double rotations = getElevatorPosition();
     return (rotations/32);
   }
-  
 
   public boolean getMaxElevatorLimit() {
+    // checks if maximum limit switch is hit
     return maxElevatorLimit.get();
   }
   public boolean getMinElevatorLimit() {
+    // checks if minimum limit switch is hit
     return minElevatorLimit.get();
   }
-
 
   @Override
   public void periodic() {
