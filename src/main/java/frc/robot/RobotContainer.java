@@ -34,7 +34,7 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
 
 
@@ -46,12 +46,12 @@ public class RobotContainer {
         () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
         () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
         () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
-        () -> false)
+        () -> true)
     );
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    // autoChooser = AutoBuilder.buildAutoChooser();
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    // SmartDashboard.putData("Auto Chooser", autoChooser);
     // Configure the trigger bindings
     configureBindings();
   }
@@ -82,7 +82,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
 
-    return autoChooser.getSelected();
+    // return autoChooser.getSelected();
+    return null;
     // return Autos.exampleAuto(exampleSubsystem);
   }
 }
