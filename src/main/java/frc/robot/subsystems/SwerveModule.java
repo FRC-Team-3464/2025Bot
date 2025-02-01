@@ -16,6 +16,7 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
@@ -194,6 +195,7 @@ public class SwerveModule {
         driveMotorConfiguration.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = SwerveConstants.openLoopRamp;
         driveMotorConfiguration.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = SwerveConstants.closedLoopRamp;
         driveMotorConfiguration.MotorOutput.Inverted = SwerveConstants.driveMotorInvert;
+        driveMotorConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         driveMotorConfigurator.apply(driveMotorConfiguration);
         driveMotorConfigurator.apply(driveSupplyLimit);

@@ -45,10 +45,10 @@ public final class Constants {
 
     // Swerve kinematics, don't change
      public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
         new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-        new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, trackWidth / 2.0));
 
     // gear ratios
     public static final double driveGearRatio = (6.12 / 1.0);
@@ -88,14 +88,14 @@ public final class Constants {
     public static final double closedLoopRamp = 0.0;
 
     /* Angle Motor PID Values */
-    public static final double angleKP = 0.01;
+    public static final double angleKP = 0.3;
     public static final double angleKI = 0;
     public static final double angleKD = 0;
     public static final double angleKF = 0;
 
     /* Drive Motor PID Values */
 
-    public static final double driveKP = 0.01; 
+    public static final double driveKP = 0.1; 
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
 
