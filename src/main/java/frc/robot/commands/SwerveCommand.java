@@ -49,11 +49,11 @@ public class SwerveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = xSpeedSup.getAsDouble();
-    double ySpeed = ySpeedSup.getAsDouble();
+    double xSpeed = xSpeedSup.getAsDouble()*0.35;
+    double ySpeed = ySpeedSup.getAsDouble()*0.35;
     double rotation = rotationSup.getAsDouble();
     
-    xSpeed = Math.abs(xSpeed) > Constants.SwerveConstants.kDeadband ?                                                                                                                                                                                                                                                                                                                                                                                           xSpeed : 0.0;
+    xSpeed = Math.abs(xSpeed) > Constants.SwerveConstants.kDeadband ? xSpeed : 0.0;
     ySpeed = Math.abs(ySpeed) > SwerveConstants.kDeadband ? ySpeed : 0.0;
     rotation = Math.abs(rotation) > SwerveConstants.kDeadband ? rotation : 0.0;
 
