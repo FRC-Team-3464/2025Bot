@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -110,9 +111,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
     for(SwerveModule mod : swerveMods){
         mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
-        // System.out.println("Module #" + mod.moduleNumber + " offset is: " + mod.getCanCoder().getDegrees());
     }
+
 }    
+
 
   public SwerveModulePosition[] getModulePositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
@@ -128,6 +130,10 @@ public class SwerveSubsystem extends SubsystemBase {
         states[mod.moduleNumber] = mod.getState();
     }
     return states;
+  }
+
+  public void resetGyro() {
+    gyro.reset();
   }
 
   public Pose2d getPose() {
@@ -148,7 +154,7 @@ public class SwerveSubsystem extends SubsystemBase {
     for(SwerveModule mod : swerveMods){
         mod.setDesiredState(desiredStates[mod.moduleNumber], false);
     }
-  }    
+  }
 
   public void driveRobotRelative(ChassisSpeeds speeds){
     SwerveModuleState[] states = Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(speeds);

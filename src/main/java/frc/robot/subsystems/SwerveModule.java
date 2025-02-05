@@ -101,7 +101,7 @@ public class SwerveModule {
       }
 
     public void setAngle(SwerveModuleState desiredState) {
-        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.maxSpeed * 0.01))
+        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.maxSpeed * 0.001))
         {
          turnMotor.stopMotor();
          return;
@@ -138,6 +138,10 @@ public class SwerveModule {
 
     public int getModuleNumber() {
         return moduleNumber;
+    }
+
+    public double getMotorSpeed() {
+        return driveMotor.getVelocity().getValueAsDouble();
     }
 
     public void setModuleNumber(int moduleNumber) {
