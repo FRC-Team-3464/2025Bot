@@ -8,9 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunElevator;
-import frc.robot.commands.SwerveCommand;
+// import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.SwerveSubsystem;
+// import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.ElevatorToPosition;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -31,30 +31,31 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem swerveSub = SwerveSubsystem.getInstance();
+  // private final SwerveSubsystem swerveSub = SwerveSubsystem.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
 
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    swerveSub.setDefaultCommand(
-      new SwerveCommand(
-        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
-        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
-        () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
-        () -> false)
-    );
+    
+    // swerveSub.setDefaultCommand(
+    //   new SwerveCommand(
+    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
+    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
+    //     () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
+    //     () -> false)
+    // );
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    // autoChooser = AutoBuilder.buildAutoChooser();
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    // SmartDashboard.putData("Auto Chooser", autoChooser);
     // Configure the trigger bindings
     configureBindings();
   }
@@ -92,8 +93,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    return null;
 
-    return autoChooser.getSelected();
+    // return autoChooser.getSelected();
     // return Autos.exampleAuto(exampleSubsystem);
   }
 }

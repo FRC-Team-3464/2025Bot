@@ -15,6 +15,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -62,6 +63,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   
   public void setElevateTarget(double target) {
     // checking which direction the elevator has to travel in to reach the target parameter after accounting for limit switches
+        System.out.println("is running");
+
     if (getMinElevatorLimit()) {
       leftElevator.set(0);
     }
@@ -101,22 +104,24 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public double getElevatorHeight() {
     // gets elevator height in inches based on number of rotations of the duty cycle encoder
-    double rotations = getElevatorPosition();
+    double rotations = getRelativeElevatorPosition();
     return (rotations/Constants.ElevatorConstants.kElevatorGearRatio);
     // change the kElevatorGearRatio later to get from CAD
   }
 
   public boolean getMaxElevatorLimit() {
     // checks if maximum limit switch is hit
-    return maxElevatorLimit.get();
+    return !maxElevatorLimit.get();
   }
   public boolean getMinElevatorLimit() {
     // checks if minimum limit switch is hit
-    return minElevatorLimit.get();
+    return !minElevatorLimit.get();
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putBoolean("Min Elevator Limit", getMinElevatorLimit());
+    SmartDashboard.putBoolean("Max Elevator Limit", getMaxElevatorLimit());
     // This method will be called once per scheduler run
   }
 

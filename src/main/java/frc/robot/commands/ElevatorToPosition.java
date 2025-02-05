@@ -27,6 +27,7 @@ public class ElevatorToPosition extends Command {
   @Override
   public void execute() {
     elevatorSub.setElevateTarget(height);
+    // System.out.println("is running");
   }    
 
   // Called once the command ends or is interrupted.
