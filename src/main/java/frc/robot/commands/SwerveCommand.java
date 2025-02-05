@@ -58,7 +58,7 @@ public class SwerveCommand extends Command {
     rotation = Math.abs(rotation) > SwerveConstants.kDeadband ? rotation : 0.0;
 
     rotation *= Constants.SwerveConstants.maxAngularVelocity;
-    swerveSub.drive(new Translation2d(xSpeed, ySpeed).times(SwerveConstants.maxSpeed), rotation, robotCentricSup.getAsBoolean(), true);
+    swerveSub.drive(new Translation2d(-xSpeed, ySpeed).times(SwerveConstants.maxSpeed), rotation, robotCentricSup.getAsBoolean(), true);
   }
 
   // Called once the command ends or is interrupted.
