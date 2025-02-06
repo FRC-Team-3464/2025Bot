@@ -63,19 +63,27 @@ public class ElevatorSubsystem extends SubsystemBase {
   
   public void setElevateTarget(double target) {
     // checking which direction the elevator has to travel in to reach the target parameter after accounting for limit switches
-        System.out.println("is running");
+        System.out.println("setElevateTarget should be running");
+        System.out.println(Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()));
 
     if (getMinElevatorLimit()) {
       leftElevator.set(0);
+      System.out.println("speed set to 0 because bottom limit switch");
     }
     else if (getMaxElevatorLimit()) {
       leftElevator.set(0);
+      System.out.println("speed set to 0 because top limit switch");
     }
-    else if (Math.abs(target - getElevatorHeight()) < target && getElevatorHeight() < target) {
+    else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) < 5) {
+      leftElevator.set(0);
+    }
+    else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) > 5 && getElevatorHeight() < target) {
       leftElevator.set(0.6);
+      System.out.println("speed set to 0.6");
     }
-    else if (Math.abs(target - getElevatorHeight()) < target && getElevatorHeight() > target) {
+    else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) > 5 && getElevatorHeight() > target) {
       leftElevator.set(-0.6);
+      System.out.println("speed set to -0.6");
     }
   }
 

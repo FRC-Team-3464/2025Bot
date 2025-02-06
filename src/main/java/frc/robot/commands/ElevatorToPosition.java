@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.lang.annotation.Target;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -27,7 +29,8 @@ public class ElevatorToPosition extends Command {
   @Override
   public void execute() {
     elevatorSub.setElevateTarget(height);
-    // System.out.println("is running");
+    System.out.println("height is " + height);
+    //System.out.println("is running setElevateTarget");
   }    
 
   // Called once the command ends or is interrupted.
@@ -39,6 +42,11 @@ public class ElevatorToPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (elevatorSub.getRelativeElevatorPosition()==height) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
