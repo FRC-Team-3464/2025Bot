@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.util.ModuleConstants;
 
+import java.util.Map;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -120,6 +122,15 @@ public final class Constants {
 
     public static final double kDeadband = 0.08;
 
+    public static final Map<Integer, Double> distances = Map.of(
+      0, 0.0,
+      1, 1.0,
+      2, 2.0,
+      3, 3.0,
+      4, 4.0
+    );
+
+    public static int targetPosition = 0;
   }
   
   public static final class ModConstants {
@@ -157,6 +168,12 @@ public final class Constants {
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375+90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
+  }
+
+  public static class ArmConstants {
+  }
+
+  public static class ElevatorConstants {
   }
   
   public static class OperatorConstants {
