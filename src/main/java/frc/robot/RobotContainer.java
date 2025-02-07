@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoCoralPosition;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveCommand;
@@ -71,7 +72,9 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   
 
-    Constants.OperatorConstants.buttonX.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
+    Constants.OperatorConstants.buttonX.whileTrue(new AutoCoralPosition(true));
+    Constants.OperatorConstants.buttonB.whileTrue(new AutoCoralPosition(false));
+    Constants.OperatorConstants.buttonY.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }
