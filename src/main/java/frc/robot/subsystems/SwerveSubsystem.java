@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -16,6 +17,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -34,6 +36,9 @@ public class SwerveSubsystem extends SubsystemBase {
   public SwerveDriveOdometry swerveOdometry;
   public SwerveModule[] swerveMods;
   public AHRS gyro;
+  public SwerveDrivePoseEstimator poseEstimator;
+
+  private final Field2d field;
   
   public SwerveSubsystem() {
     gyro = new AHRS(NavXComType.kMXP_SPI);
@@ -50,6 +55,10 @@ public class SwerveSubsystem extends SubsystemBase {
     resetModulesToAbsolute();
 
     swerveOdometry = new SwerveDriveOdometry(SwerveConstants.swerveKinematics, getYaw(), getModulePositions());
+
+    poseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveConstants.swerveKinematics, getYaw(), getModulePositions(), new Pose2d());
+
+    field = new Field2d();
 
     // RobotConfig config;
     // try{
@@ -112,9 +121,7 @@ public class SwerveSubsystem extends SubsystemBase {
     for(SwerveModule mod : swerveMods){
         mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
     }
-
-}    
-
+  }
 
   public SwerveModulePosition[] getModulePositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
@@ -137,7 +144,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return swerveOdometry.getPoseMeters();
+    return poseEstimator.getEstimatedPosition();
   }
 
   public void resetPose(Pose2d pose) {
@@ -148,18 +155,16 @@ public class SwerveSubsystem extends SubsystemBase {
     return Constants.SwerveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
   }
 
+  public void addVisionMeasurement(Pose2d estimatedRobotPose2d, double timestampSeconds) {
+    poseEstimator.addVisionMeasurement(estimatedRobotPose2d, timestampSeconds);
+  }
+
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.SwerveConstants.maxSpeed);
     
     for(SwerveModule mod : swerveMods){
         mod.setDesiredState(desiredStates[mod.moduleNumber], false);
     }
-  }
-
-  public void driveRobotRelative(ChassisSpeeds speeds){
-    SwerveModuleState[] states = Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(speeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.SwerveConstants.maxSpeed);
-    setModuleStates(states);
   }
 
   public void resetModulesToAbsolute(){
@@ -175,6 +180,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    poseEstimator.update(getYaw(), getModulePositions());
+    field.setRobotPose(getPose());
     // System.out.println(new CANcoder(Constants.ModConstants.Mod0.canCoderID).getAbsolutePosition());
     // This method will be called once per scheduler run
   }
