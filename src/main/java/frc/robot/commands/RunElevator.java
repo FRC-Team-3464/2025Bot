@@ -27,7 +27,7 @@ public class RunElevator extends Command {
   @Override
   public void execute() {
     if (direction == true) {
-      elevatorSub.runElevator(0.5);
+      elevatorSub.runElevator(0.3);
     }
     else if (direction == false) {
       elevatorSub.runElevator(-0.3);

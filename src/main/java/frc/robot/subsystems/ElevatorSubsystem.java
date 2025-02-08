@@ -78,11 +78,11 @@ public class ElevatorSubsystem extends SubsystemBase {
       leftElevator.set(0);
     }
     else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) > 5 && getElevatorHeight() < target) {
-      leftElevator.set(0.6);
+      leftElevator.set(0.3);
       System.out.println("speed set to 0.6");
     }
     else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) > 5 && getElevatorHeight() > target) {
-      leftElevator.set(-0.6);
+      leftElevator.set(-0.3);
       System.out.println("speed set to -0.6");
     }
   }
@@ -107,7 +107,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public double getElevatorPosition() {
     // gets elevator position based on number of rotations of duty cycle encoder
-    return absElevatorEncoder.get();
+    return leftEncoder.getPosition();
   }
 
   public double getElevatorHeight() {
