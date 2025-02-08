@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveCommand;
+import frc.robot.commands.AlgaeCommands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -72,6 +74,11 @@ public class RobotContainer {
   
 
     Constants.OperatorConstants.buttonX.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
+    
+    // Constants.OperatorConstants.button3.onTrue(new DeployAlgaeIntake());
+    // Constants.OperatorConstants.button4.onTrue(new RetractAlgaeIntake());
+    OperatorConstants.button3.whileTrue(new SequentialCommandGroup(new DeployAlgaeIntake(), new RunAlgaeIntake()));
+    OperatorConstants.button4.onTrue(new SequentialCommandGroup(new ReverseAlgaeIntake(), new RetractAlgaeIntake()));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }
