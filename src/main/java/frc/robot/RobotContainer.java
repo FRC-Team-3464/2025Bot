@@ -7,10 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.SwerveCommand;
+// import frc.robot.commands.SwerveCommand;
 import frc.robot.commands.AlgaeCommands.*;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.SwerveSubsystem;
+// import frc.robot.subsystems.SwerveSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem swerveSub = SwerveSubsystem.getInstance();
+  // private final SwerveSubsystem swerveSub = SwerveSubsystem.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -44,13 +44,13 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    swerveSub.setDefaultCommand(
-      new SwerveCommand(
-        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
-        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
-        () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
-        () -> false)
-    );
+    // swerveSub.setDefaultCommand(
+    //   new SwerveCommand(
+    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
+    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
+    //     () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
+    //     () -> false)
+    // );
 
     // autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -73,12 +73,12 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   
 
-    Constants.OperatorConstants.buttonX.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
+    // Constants.OperatorConstants.buttonX.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
     
     // Constants.OperatorConstants.button3.onTrue(new DeployAlgaeIntake());
     // Constants.OperatorConstants.button4.onTrue(new RetractAlgaeIntake());
     OperatorConstants.button3.whileTrue(new SequentialCommandGroup(new DeployAlgaeIntake(), new RunAlgaeIntake()));
-    OperatorConstants.button4.onTrue(new SequentialCommandGroup(new ReverseAlgaeIntake(), new RetractAlgaeIntake()));
+    OperatorConstants.button4.whileTrue(new SequentialCommandGroup(new ReverseAlgaeIntake(), new RetractAlgaeIntake()));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }

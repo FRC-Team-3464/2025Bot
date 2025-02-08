@@ -38,6 +38,7 @@ public class DeployAlgaeIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return algaeSub.getExtendedLimit();
+    // return algaeSub.getExtendedLimit()
+    return false;
   }
 }

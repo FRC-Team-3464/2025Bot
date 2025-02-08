@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class AlgaeSubsystem extends SubsystemBase {
   /** Creates a new AlgaeSubsystem. */
   private final SparkMax algaePivotMotor = new SparkMax(14, MotorType.kBrushless);
-  private final SparkMax algaeMotor = new SparkMax(15, MotorType.kBrushless);
+  private final SparkMax algaeMotor = new SparkMax(9, MotorType.kBrushless);
   private final SparkMax invertedAlgaeMotor = new SparkMax(16, MotorType.kBrushless);
   private final RelativeEncoder algaePivotEncoder = algaePivotMotor.getEncoder();
   private final RelativeEncoder algaeEncoder = algaeMotor.getEncoder();
@@ -32,8 +32,9 @@ public class AlgaeSubsystem extends SubsystemBase {
   public static AlgaeSubsystem instance = new AlgaeSubsystem();
   
   public AlgaeSubsystem() {
-    algaePivotConfig.follow(14, true);
-    invertedAlgaeMotor.configure(algaePivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // algaePivotConfig = new SparkMaxConfig();
+    // algaePivotConfig.follow(14, true);
+    // invertedAlgaeMotor.configure(algaePivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public static AlgaeSubsystem getInstance() {
@@ -45,20 +46,20 @@ public class AlgaeSubsystem extends SubsystemBase {
 
   // Look at this later with Peiwei
   public void DeployAlgaeIntake() {
-    if(algaeMaxLimit.get() == true) {
+    if(getExtendedLimit()) {
       algaePivotMotor.set(0);
     }
     else {
-      algaePivotMotor.set(1);
+      algaePivotMotor.set(0.3);
     }
   }
 
   public void RetractAlgaeIntake() {
-    if(stowLimit.get() == true) {
+    if(getStowLimit()) {
       algaePivotMotor.set(0);
     }
     else {
-      algaePivotMotor.set(-1);
+      algaePivotMotor.set(-0.3);
     }
   }
 
@@ -81,15 +82,19 @@ public class AlgaeSubsystem extends SubsystemBase {
   }
 
   public boolean getStowLimit() {
-    return stowLimit.get();
+    return !stowLimit.get();
   }
 
   public double getAlgaeSpeed() {
-    return algaeMotor.get();
+    return algaeEncoder.getVelocity();
   }
 
   public boolean getExtendedLimit() {
-    return algaeMaxLimit.get();
+    return !algaeMaxLimit.get();
+  }
+
+  public void setAlgaeIntakePosition(double position) {
+    algaeEncoder.setPosition(position);
   }
 
   @Override
