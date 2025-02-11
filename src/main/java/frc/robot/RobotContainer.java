@@ -7,9 +7,11 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.SwerveCommand;
+import frc.robot.commands.RainbowLEDCommand;
+// import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+// import frc.robot.subsystems.SwerveSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -28,30 +31,30 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem swerveSub = SwerveSubsystem.getInstance();
+  // private final SwerveSubsystem swerveSub = SwerveSubsystem.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
 
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    swerveSub.setDefaultCommand(
-      new SwerveCommand(
-        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
-        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
-        () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
-        () -> false)
-    );
+    // swerveSub.setDefaultCommand(
+    //   new SwerveCommand(
+    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
+    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
+    //     () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
+    //     () -> false)
+    // );
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    // autoChooser = AutoBuilder.buildAutoChooser();
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    // SmartDashboard.putData("Auto Chooser", autoChooser);
     // Configure the trigger bindings
     configureBindings();
   }
@@ -69,7 +72,8 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   
-
+    Constants.OperatorConstants.button1.whileTrue(new RainbowLEDCommand());
+    // Constants.OperatorConstants.button2.whileTrue(new InstantCommand(() -> LEDSubsystem)
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }
@@ -82,7 +86,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
 
-    return autoChooser.getSelected();
+    // return autoChooser.getSelected();
     // return Autos.exampleAuto(exampleSubsystem);
+    return null;
   }
 }

@@ -16,8 +16,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
   /** Creates a new LEDSubsystem. */
-  private final AddressableLED ledStrip = new AddressableLED(0);
+  public static LEDSubsystem instance;
+  private final AddressableLED ledStrip = new AddressableLED(1);
   private final AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(10);
+
+  public static LEDSubsystem getInstance() {
+    if (instance == null) {
+      instance = new LEDSubsystem();
+    }
+    return instance;
+  }
   
   public LEDSubsystem() {
     // four score and seven years ago.......
@@ -124,8 +132,6 @@ public class LEDSubsystem extends SubsystemBase {
 
   //manhunt vs 4 GOVERNMENT AGENTS IRL!!
   // trust me bro it's legal <3
-      
-  }
 
   @Override
   public void periodic() {
