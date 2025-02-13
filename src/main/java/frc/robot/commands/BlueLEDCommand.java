@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LEDSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RainbowLEDCommand extends Command {
+public class BlueLEDCommand extends Command {
   private LEDSubsystem LEDSub;
   /** Creates a new RainbowLEDCommand. */
-  public RainbowLEDCommand() {
+  public BlueLEDCommand() {
     LEDSub = LEDSubsystem.getInstance();
     addRequirements(LEDSub);
 
@@ -26,8 +26,8 @@ public class RainbowLEDCommand extends Command {
   @Override
   public void execute() {
     // LEDSub.rainbowLED();
-    LEDSub.rainbowLED();
-    System.out.println("rainbow LEDs should be running");
+    LEDSub.blueLED();
+    System.out.println("Blue LEDs should be running");
   }
 
   // Called once the command ends or is interrupted.

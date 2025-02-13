@@ -34,6 +34,12 @@ public class LEDSubsystem extends SubsystemBase {
     ledStrip.start();
   }
 
+  public void setOff() {
+    LEDPattern off = LEDPattern.kOff;
+    off.applyTo(ledBuffer);
+    ledStrip.setData(ledBuffer);
+  }
+
   public void redLED() {
     // basically this makes it red ahaha
     LEDPattern red = LEDPattern.solid(Color.kRed);
