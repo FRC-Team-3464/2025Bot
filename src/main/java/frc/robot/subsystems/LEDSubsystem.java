@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Microseconds;
 
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -109,7 +110,7 @@ public class LEDSubsystem extends SubsystemBase {
     LEDPattern rainbow = LEDPattern.rainbow(255, 128);
     Distance ledSpacing = Meters.of(1 / 120.0);
     LEDPattern scrollingRainbow =
-      rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(1), ledSpacing);
+      rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(4), ledSpacing);
     scrollingRainbow.applyTo(ledBuffer);
     ledStrip.setData(ledBuffer);
   }
@@ -136,6 +137,26 @@ public class LEDSubsystem extends SubsystemBase {
     ledStrip.setData(ledBuffer);
   }
 
+  // Create an LED pattern that displays a red-to-blue gradient, breathing at a 2 second period (0.5 Hz)
+  public void warningPulse(){
+    //LEDPattern base = LEDPattern.discontinuousGradient(Color.kRed, Color.kYellow);
+    LEDPattern base = LEDPattern.solid(Color.kRed);
+    LEDPattern pattern = base.breathe(Microseconds.of(3000000));
+    // Apply the LED pattern to the data buffer
+    pattern.applyTo(ledBuffer);
+    // Write the data to the LED strip
+    ledStrip.setData(ledBuffer);
+  }
+public void shootingSequence(){
+
+  // Create an LED pattern that displays a black-and-white mask that displays the current height of an elevator
+// mechanism. This can be combined with other patterns to change the displayed color to something other than white.
+LEDPattern pattern = LEDPattern.progressMaskLayer(() -> pancakeLeft.getY() / pancakeRight.getY());
+// Apply the LED pattern to the data buffer
+pattern.applyTo(ledBuffer);
+// Write the data to the LED strip
+ledStrip.setData(ledBuffer);
+}
   //manhunt vs 4 GOVERNMENT AGENTS IRL!!
   // trust me bro it's legal <3
 

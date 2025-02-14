@@ -12,6 +12,7 @@ import frc.robot.commands.GreenLEDCommand;
 import frc.robot.commands.OrangeLEDCommand;
 import frc.robot.commands.RainbowLEDCommand;
 import frc.robot.commands.RedLEDCommand;
+import frc.robot.commands.WarningPulseCommand;
 // import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
@@ -76,12 +77,13 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   
-    Constants.OperatorConstants.button1.whileTrue(new RedLEDCommand());
+    Constants.OperatorConstants.button5.whileTrue(new RedLEDCommand());
     Constants.OperatorConstants.button2.whileTrue(new RainbowLEDCommand());
     Constants.OperatorConstants.button3.whileTrue(new OrangeLEDCommand());
     Constants.OperatorConstants.button4.whileTrue(new BlueLEDCommand());
     Constants.OperatorConstants.button5.whileTrue(new GreenLEDCommand());
-    // Constants.OperatorConstants.button2.whileTrue(new InstantCommand(() -> LEDSubsystem)
+    Constants.OperatorConstants.button6.whileTrue(new WarningPulseCommand());
+    // Constants.OperatorConstants.button2.whileTrue(new InstantCommand(LEDSubsystem.getInstance() :: greenLED, LEDSubsystem.getInstance()));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }
