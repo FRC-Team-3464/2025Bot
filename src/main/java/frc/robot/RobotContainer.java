@@ -6,13 +6,25 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.BenPeiLEDCommand;
+import frc.robot.commands.BluGrenConGradientLEDCommand;
 import frc.robot.commands.BlueLEDCommand;
+import frc.robot.commands.BlueVioletLEDCommand;
+import frc.robot.commands.ClimbersLEDCommand;
+import frc.robot.commands.DenimLEDCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.FunEffectLEDCommand;
+import frc.robot.commands.GhostWhiteLEDCommand;
+import frc.robot.commands.GoldLEDCommand;
 import frc.robot.commands.GreenLEDCommand;
+import frc.robot.commands.IntakeLEDCommand;
 import frc.robot.commands.OrangeLEDCommand;
 import frc.robot.commands.RainbowLEDCommand;
+import frc.robot.commands.RedBluNonContGradLEDCommand;
 import frc.robot.commands.RedLEDCommand;
-import frc.robot.commands.WarningPulseCommand;
+import frc.robot.commands.WarningPulseLEDCommand;
+import frc.robot.commands.ClimbersLEDCommand;
+import frc.robot.commands.YelRedConGradientLEDCommand;
 // import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
@@ -77,12 +89,19 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   
-    Constants.OperatorConstants.button5.whileTrue(new RedLEDCommand());
-    Constants.OperatorConstants.button2.whileTrue(new RainbowLEDCommand());
-    Constants.OperatorConstants.button3.whileTrue(new OrangeLEDCommand());
-    Constants.OperatorConstants.button4.whileTrue(new BlueLEDCommand());
-    Constants.OperatorConstants.button5.whileTrue(new GreenLEDCommand());
-    Constants.OperatorConstants.button6.whileTrue(new WarningPulseCommand());
+    Constants.OperatorConstants.button1.whileTrue(new RainbowLEDCommand());
+    Constants.OperatorConstants.button2.whileTrue(new GhostWhiteLEDCommand());
+    Constants.OperatorConstants.button3.whileTrue(new IntakeLEDCommand());
+    Constants.OperatorConstants.button4.whileTrue(new WarningPulseLEDCommand());
+    Constants.OperatorConstants.button5.whileTrue(new ClimbersLEDCommand());
+    Constants.OperatorConstants.button6.whileTrue(new FunEffectLEDCommand());
+    Constants.OperatorConstants.button7.whileTrue(new BenPeiLEDCommand());
+    Constants.OperatorConstants.button8.whileTrue(new RedBluNonContGradLEDCommand());
+    Constants.OperatorConstants.button9.whileTrue(new DenimLEDCommand());
+    Constants.OperatorConstants.button10.whileTrue(new BluGrenConGradientLEDCommand());
+    Constants.OperatorConstants.button11.whileTrue(new GoldLEDCommand());
+    Constants.OperatorConstants.button12.whileTrue(new YelRedConGradientLEDCommand());
+
     // Constants.OperatorConstants.button2.whileTrue(new InstantCommand(LEDSubsystem.getInstance() :: greenLED, LEDSubsystem.getInstance()));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
