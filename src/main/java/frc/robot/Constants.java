@@ -47,10 +47,10 @@ public final class Constants {
 
     // Swerve kinematics, don't change
      public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-        new Translation2d(wheelBase / 2.0, trackWidth / 2.0), // front left
-        new Translation2d(wheelBase / 2.0, trackWidth / -2.0), // front right
-        new Translation2d(-wheelBase / 2.0, trackWidth / 2.0), // back left
-        new Translation2d(-wheelBase / 2.0, trackWidth / -2.0)); // back right
+      new Translation2d(-wheelBase / 2.0, trackWidth / 2.0), // front left
+      new Translation2d(wheelBase / 2.0, trackWidth / 2.0), // front right
+      new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0), // back left
+      new Translation2d(wheelBase / 2.0, -trackWidth / 2.0)); // back right
 
     // gear ratios
     public static final double driveGearRatio = (6.12 / 1.0);
@@ -110,9 +110,13 @@ public final class Constants {
 
     /* Drive Motor Characterization Values 
      * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-    public static final double driveKS = (0.32 / 12); 
-    public static final double driveKV = (1.51 / 12);
-    public static final double driveKA = (0.27 / 12);
+    // public static final double driveKS = (0.32 / 12); 
+    // public static final double driveKV = (1.51 / 12);
+    // public static final double driveKA = (0.27 / 12);
+
+    public static final double driveKS = (0.32 / 12);
+    public static final double driveKV = (1.988 / 12);
+    public static final double driveKA = (1.0449 / 12);
 
     /* Swerve Profiling Values */
     /** Meters per Second */
@@ -150,7 +154,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 19;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003 + 90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -159,7 +163,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 3;
       public static final int angleMotorID = 4;
       public static final int canCoderID = 20;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125-90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
         
@@ -168,7 +172,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 5;
       public static final int angleMotorID = 6; 
       public static final int canCoderID = 21;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125 - 90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -177,7 +181,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 7;
       public static final int angleMotorID = 8;
       public static final int canCoderID = 22;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375 + 90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
   }

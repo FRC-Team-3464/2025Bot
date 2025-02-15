@@ -95,7 +95,7 @@ public class SwerveModule {
         } 
         else {
           driveVelocity.Velocity = desiredState.speedMetersPerSecond / SwerveConstants.driveRevToMeters;
-        //   driveVelocity.FeedForward = driveFeedForward.calculate(desiredState.speedMetersPerSecond);
+          driveVelocity.FeedForward = driveFeedForward.calculate(desiredState.speedMetersPerSecond);
           driveMotor.setControl(driveVelocity);
         }
       }
