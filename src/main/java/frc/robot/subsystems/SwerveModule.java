@@ -33,6 +33,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.SwerveConstants;
 
@@ -86,6 +87,7 @@ public class SwerveModule {
         desiredState.speedMetersPerSecond *= desiredState.angle.minus(getState().angle).getCos(); 
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
+        SmartDashboard.putNumber("Desired angle", desiredState.angle.getDegrees());
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -101,7 +103,7 @@ public class SwerveModule {
       }
 
     public void setAngle(SwerveModuleState desiredState) {
-        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.maxSpeed * 0.001))
+        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.maxSpeed * 0.01))
         {
          turnMotor.stopMotor();
          return;

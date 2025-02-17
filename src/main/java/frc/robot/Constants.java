@@ -154,7 +154,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 19;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003 + 90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -163,7 +163,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 3;
       public static final int angleMotorID = 4;
       public static final int canCoderID = 20;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125-90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
         
@@ -172,7 +172,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 5;
       public static final int angleMotorID = 6; 
       public static final int canCoderID = 21;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125 - 90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -181,7 +181,7 @@ The offset of module 3 is: 89.82421875
       public static final int driveMotorID = 7;
       public static final int angleMotorID = 8;
       public static final int canCoderID = 22;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375 + 90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
   }
