@@ -11,9 +11,12 @@ import java.util.Map;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -101,28 +104,20 @@ public final class Constants {
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
 
-    /* Heading PID Values */
-    public static final double headingKP = 4;
-    public static final double headingKI = 0.0;
-    public static final double headingKD = 0;
-    public static final double headingTolerence = 0;
-
-
-    /* Drive Motor Characterization Values 
-     * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-    // public static final double driveKS = (0.32 / 12); 
-    // public static final double driveKV = (1.51 / 12);
-    // public static final double driveKA = (0.27 / 12);
-
     public static final double driveKS = (0.32 / 12);
     public static final double driveKV = (1.988 / 12);
     public static final double driveKA = (1.0449 / 12);
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 4.0;
+    public static final double kPhysicalMaxSpeed = 5.0;
+    public static final double kMaxTeleDriveSpeed = 4.5;
+    // radians per sec
+    public static final double kPhysicalMaxAngularSpeed = 2 * 2 * Math.PI;
+    public static final double kMaxTeleAngularSpeed = kPhysicalMaxAngularSpeed / 2;
+
+    public static final double kMaxAngularAccelerationSpeed = 4 / Math.PI;
     /** Radians per Second */
-    public static final double maxAngularVelocity = 5.0;
 
     public static final double kDeadband = 0.08;
 
@@ -136,18 +131,23 @@ public final class Constants {
 
     public static int targetPosition = 0;
   }
-  /*
-  The offset of module 0 is: 89.12109375 
-The offset of module 1 is: 91.494140625 *
-The offset of module 2 is: 270.966796875
-The offset of module 3 is: 91.494140625 * */   
 
-/* 
- * The offset of module 0 is: 60.29296875000001 *
-The offset of module 1 is: 89.296875
-The offset of module 2 is: 34.716796875 *
-The offset of module 3 is: 89.82421875
-*/
+  public static final class AutoConstants {
+    public static final double kPXController = 1.5;
+    public static final double kPYController = 1;
+    public static final double kPThetaController = 4;
+    
+    public static final double kThetaTolerance = 0;
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
+    new TrapezoidProfile.Constraints(
+      SwerveConstants.kMaxTeleAngularSpeed,
+      SwerveConstants.kMaxAngularAccelerationSpeed
+      );
+
+    public static final PIDController xController = new PIDController(kPXController, 0, 0);
+    public static final PIDController yController = new PIDController(kPYController, 0, 0);
+    public static final ProfiledPIDController rotationController = new ProfiledPIDController(kPThetaController, 0, 0, kThetaControllerConstraints);
+  }
   
   public static final class ModConstants {
     public static final class Mod0 { //frontLeft

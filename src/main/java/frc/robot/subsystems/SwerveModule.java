@@ -92,7 +92,7 @@ public class SwerveModule {
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if (isOpenLoop) {
-          driveDutyCycle.Output = desiredState.speedMetersPerSecond / Constants.SwerveConstants.maxSpeed;
+          driveDutyCycle.Output = desiredState.speedMetersPerSecond / Constants.SwerveConstants.kMaxTeleDriveSpeed;
           driveMotor.setControl(driveDutyCycle);
         } 
         else {
@@ -103,7 +103,7 @@ public class SwerveModule {
       }
 
     public void setAngle(SwerveModuleState desiredState) {
-        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.maxSpeed * 0.01))
+        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.kMaxTeleDriveSpeed * 0.01))
         {
          turnMotor.stopMotor();
          return;

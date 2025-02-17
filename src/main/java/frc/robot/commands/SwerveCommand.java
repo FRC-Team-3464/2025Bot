@@ -31,9 +31,9 @@ public class SwerveCommand extends Command {
     swerveSub = SwerveSubsystem.getInstance();
     addRequirements(swerveSub);
 
-    rotationController = new PIDController(Constants.SwerveConstants.headingKP, Constants.SwerveConstants.headingKI, Constants.SwerveConstants.headingKD );
+    rotationController = new PIDController(Constants.AutoConstants.kPThetaController, 0, 0);
     rotationController.enableContinuousInput(-Math.PI, Math.PI);
-    rotationController.setTolerance(Constants.SwerveConstants.headingTolerence);
+    rotationController.setTolerance(Constants.AutoConstants.kThetaTolerance);
 
     this.ySpeedSup = ySpeedSup;
     this.xSpeedSup = xSpeedSup;
@@ -57,8 +57,8 @@ public class SwerveCommand extends Command {
     ySpeed = Math.abs(ySpeed) > SwerveConstants.kDeadband ? ySpeed : 0.0;
     rotation = Math.abs(rotation) > SwerveConstants.kDeadband ? rotation : 0.0;
 
-    rotation *= Constants.SwerveConstants.maxAngularVelocity;
-    swerveSub.drive(new Translation2d(ySpeed, xSpeed).times(SwerveConstants.maxSpeed), rotation, robotCentricSup.getAsBoolean(), true);
+    rotation *= Constants.SwerveConstants.kMaxTeleAngularSpeed;
+    swerveSub.drive(new Translation2d(ySpeed, xSpeed).times(SwerveConstants.kPhysicalMaxSpeed), rotation, robotCentricSup.getAsBoolean(), true);
     // translation strafe
   }
 

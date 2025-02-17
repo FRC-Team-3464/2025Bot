@@ -62,7 +62,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     field = new Field2d();
 
-    try{
+    try {
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
       // Handle exception as needed
@@ -117,7 +117,7 @@ public class SwerveSubsystem extends SubsystemBase {
                                 rotation)
                             );
 
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SwerveConstants.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SwerveConstants.kMaxTeleDriveSpeed);
 
     for(SwerveModule mod : swerveMods){
         mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -168,7 +168,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.SwerveConstants.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.SwerveConstants.kMaxTeleDriveSpeed);
     
     for(SwerveModule mod : swerveMods){
         mod.setDesiredState(desiredStates[mod.moduleNumber], false);
