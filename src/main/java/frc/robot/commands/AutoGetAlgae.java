@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -18,7 +19,7 @@ public class AutoGetAlgae extends Command {
 
   private final Timer timer = new Timer();
 
-  private final ProfiledPIDController rotationController = new ProfiledPIDController(0, 0, 0, null);
+  private final ProfiledPIDController rotationController = new ProfiledPIDController(Constants.AutoConstants.kPThetaController, 0, 0, null);
 
   public AutoGetAlgae() {
     addRequirements(visionSub);
