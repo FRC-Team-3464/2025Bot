@@ -76,7 +76,6 @@ public class AutoCoralPosition extends Command {
         new Rotation3d(0, 0,  0).toRotation2d()
       );
 
-
     addRequirements(swerveSub);
     addRequirements(visionSub);
   }

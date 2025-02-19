@@ -117,6 +117,7 @@ public final class Constants {
     public static final double kMaxTeleAngularSpeed = kPhysicalMaxAngularSpeed / 2;
 
     public static final double kMaxAngularAccelerationSpeed = 4 / Math.PI;
+    public static final double kMaxTeleAngularAccelerationSpeed = kMaxAngularAccelerationSpeed / 2;
     /** Radians per Second */
 
     public static final double kDeadband = 0.08;
@@ -141,7 +142,7 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
     new TrapezoidProfile.Constraints(
       SwerveConstants.kMaxTeleAngularSpeed,
-      SwerveConstants.kMaxAngularAccelerationSpeed
+      SwerveConstants.kMaxTeleAngularAccelerationSpeed
       );
 
     public static final PIDController xController = new PIDController(kPXController, 0, 0);

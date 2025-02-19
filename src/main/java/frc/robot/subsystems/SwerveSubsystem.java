@@ -146,9 +146,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public void driveRobotRelative(ChassisSpeeds speeds) {
     SwerveModuleState[] swerveModuleStates = Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(speeds);
-    for(SwerveModule mod : swerveMods){
-      mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
-  }
+    setModuleStates(swerveModuleStates);
   }
 
   public Pose2d getPose() {
