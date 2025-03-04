@@ -16,6 +16,11 @@
 // import com.ctre.phoenix6.controls.VelocityVoltage;
 // import com.ctre.phoenix6.hardware.CANcoder;
 // import com.ctre.phoenix6.hardware.TalonFX;
+// import com.ctre.phoenix6.signals.SensorDirectionValue;
+
+// import frc.robot.util.ModuleConstants;
+// import frc.robot.util.ModuleState;
+
 // import com.ctre.phoenix6.signals.NeutralModeValue;
 // import com.ctre.phoenix6.signals.SensorDirectionValue;
 // import com.revrobotics.RelativeEncoder;
@@ -33,6 +38,8 @@
 // import edu.wpi.first.math.geometry.Rotation2d;
 // import edu.wpi.first.math.kinematics.SwerveModulePosition;
 // import edu.wpi.first.math.kinematics.SwerveModuleState;
+// import edu.wpi.first.wpilibj.Encoder;
+
 // import frc.robot.Constants;
 // import frc.robot.Constants.SwerveConstants;
 
@@ -51,6 +58,7 @@
 //     private CANcoderConfigurator angleEncoderConfigurator;
 //     private CANcoderConfiguration angleEncoderConfiguration;
 //     private EncoderConfig turnEncoderConfig;
+//     private SparkMaxConfig sparkMaxConfig;
 //     private SparkMaxConfig turnSparkMaxConfig;
 //     private TalonFXConfiguration driveMotorConfiguration;
 //     private TalonFXConfigurator driveMotorConfigurator;
@@ -95,12 +103,14 @@
 //         } 
 //         else {
 //           driveVelocity.Velocity = desiredState.speedMetersPerSecond / SwerveConstants.driveRevToMeters;
-//         //   driveVelocity.FeedForward = driveFeedForward.calculate(desiredState.speedMetersPerSecond);
+//           driveVelocity.FeedForward = driveFeedForward.calculate(desiredState.speedMetersPerSecond);
+
 //           driveMotor.setControl(driveVelocity);
 //         }
 //       }
 
 //     public void setAngle(SwerveModuleState desiredState) {
+
 //         if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.maxSpeed * 0.001))
 //         {
 //          turnMotor.stopMotor();
@@ -140,9 +150,7 @@
 //         return moduleNumber;
 //     }
 
-//     public double getMotorSpeed() {
-//         return driveMotor.getVelocity().getValueAsDouble();
-//     }
+
 
 //     public void setModuleNumber(int moduleNumber) {
 //         this.moduleNumber = moduleNumber;
@@ -159,6 +167,7 @@
 //     }
 
 //     private void configureTurnMotor() {
+
 //         turnSparkMaxConfig = new SparkMaxConfig();
 //         turnEncoderConfig = new EncoderConfig();
 //         turnSparkMaxConfig
@@ -176,7 +185,6 @@
 //         turnEncoderConfig
 //             .positionConversionFactor(SwerveConstants.DegreesPerTurnRotation)
 //             .velocityConversionFactor(SwerveConstants.DegreesPerTurnRotation / 60); // this is degrees per sec
-//         turnSparkMaxConfig.encoder.apply(turnEncoderConfig);
 //         turnMotor.configure(turnSparkMaxConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 //     }
 
@@ -199,10 +207,11 @@
 //         driveMotorConfiguration.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = SwerveConstants.openLoopRamp;
 //         driveMotorConfiguration.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = SwerveConstants.closedLoopRamp;
 //         driveMotorConfiguration.MotorOutput.Inverted = SwerveConstants.driveMotorInvert;
-//         driveMotorConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
 
 //         driveMotorConfigurator.apply(driveMotorConfiguration);
 //         driveMotorConfigurator.apply(driveSupplyLimit);
 //     }
+
 
 // }
