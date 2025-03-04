@@ -49,12 +49,19 @@
 //   // Called every time the scheduler runs while the command is scheduled.
 //   @Override
 //   public void execute() {
-//     double xSpeed = MathUtil.applyDeadband(xSpeedSup.getAsDouble(), Constants.SwerveConstants.kDeadband);
-//     double ySpeed = MathUtil.applyDeadband(ySpeedSup.getAsDouble(), Constants.SwerveConstants.kDeadband);
-//     double rotation = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.SwerveConstants.kDeadband);
+
+
+//     double xSpeed = xSpeedSup.getAsDouble()*0.35;
+//     double ySpeed = ySpeedSup.getAsDouble()*0.35;
+//     double rotation = rotationSup.getAsDouble();
+    
+//     xSpeed = Math.abs(xSpeed) > Constants.SwerveConstants.kDeadband ? xSpeed : 0.0;
+//     ySpeed = Math.abs(ySpeed) > SwerveConstants.kDeadband ? ySpeed : 0.0;
+//     rotation = Math.abs(rotation) > SwerveConstants.kDeadband ? rotation : 0.0;
 
 //     rotation *= Constants.SwerveConstants.maxAngularVelocity;
-//             swerveSub.drive(new Translation2d(xSpeed, ySpeed).times(SwerveConstants.maxSpeed), rotation, robotCentricSup.getAsBoolean(), true);
+//     swerveSub.drive(new Translation2d(-xSpeed, ySpeed).times(SwerveConstants.maxSpeed), rotation, robotCentricSup.getAsBoolean(), true);
+
 //   }
 
 //   // Called once the command ends or is interrupted.
