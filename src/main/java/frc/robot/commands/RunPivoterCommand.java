@@ -25,11 +25,11 @@ public class RunPivoterCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (direction == true) {
-      armSub.runPivoter(0.5);
+    if (direction) {
+      armSub.runPivoter(0.6);
     }
-    else if (direction == false) {
-      armSub.runPivoter(-0.2);
+    else if (!direction) {
+      armSub.runPivoter(-0.6);
     }
   }
 

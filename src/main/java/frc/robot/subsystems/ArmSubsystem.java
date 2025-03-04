@@ -36,7 +36,7 @@ public class ArmSubsystem extends SubsystemBase {
   private SparkMaxConfig rightPivotConfig;
 
   public ArmSubsystem() {
-    
+    rightPivotConfig = new SparkMaxConfig();
     rightPivotConfig.follow(11, true);
     rightPivot.configure(rightPivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
@@ -50,15 +50,16 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void runPivoter(double speed) {
-    if (getMaxPivotLimit()) {
-      leftPivot.set(0);
-    }
-    else if (getMinPivotLimit()) {
-      leftPivot.set(0);
-    }
-    else {
-      leftPivot.set(speed);
-    }
+    // if (getMaxPivotLimit()) {
+    //   leftPivot.set(0);
+    // }
+    // else if (getMinPivotLimit()) {
+    //   leftPivot.set(0);
+    // }
+    // else {
+    //   leftPivot.set(speed);
+    // }
+    leftPivot.set(speed);
   }
 
   public void pivotToPosition(double target) {
@@ -110,6 +111,6 @@ public class ArmSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Pivoter Degrees", getPivoterDegrees());
     SmartDashboard.putBoolean("Pivoter Max Limit", getMaxPivotLimit());
     SmartDashboard.putBoolean("Pivoter Min Limit", getMinPivotLimit());
-    SmartDashboard.putNumber("Pivoter Setpoint", pivotToPosition());
+    // SmartDashboard.putNumber("Pivoter Setpoint", pivotToPosition());
   }
 }
