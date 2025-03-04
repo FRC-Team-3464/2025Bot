@@ -4,6 +4,7 @@
 
 package frc.robot.commands.AlgaeCommands;
 
+import edu.wpi.first.wpilibj.ADXL345_I2C.AllAxes;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgaeSubsystem;
 
@@ -14,6 +15,7 @@ public class ReverseAlgaeIntake extends Command {
 
   private boolean targetReached;
   private double rotations;
+  private boolean rotationsSet;
 
   public ReverseAlgaeIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -23,18 +25,27 @@ public class ReverseAlgaeIntake extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    targetReached = false;
+    rotationsSet = false;
+    rotations = 0;
+    algaeSub.setAlgaeIntakePosition(0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    algaeSub.runAlgaeMotor(-1);
-    if (algaeSub.getAlgaeSpeed() >= 2000) {
+    algaeSub.runAlgaeMotor(-0.3);
+    if (algaeSub.getAlgaeSpeed() <= -1600) {
       targetReached = true;
     }
     if (targetReached) {
       if (algaeSub.getAlgaeSpeed() <= 1800) {
-        rotations = algaeSub.getAlgaeIntakePosition();
+        if (!rotationsSet) {
+          rotations = algaeSub.getAlgaeIntakePosition();
+          rotationsSet = true;
+          System.out.println("set");
+        }
       }
     }
   }
@@ -48,6 +59,6 @@ public class ReverseAlgaeIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((algaeSub.getAlgaeIntakePosition() - rotations) > 5);
+    return (rotationsSet && (algaeSub.getAlgaeIntakePosition() - rotations) < -15);
   }
 }
