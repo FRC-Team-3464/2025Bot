@@ -30,7 +30,7 @@ public class RunAlgaeIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    algaeSub.runAlgaeMotor(0.5);
+    algaeSub.runAlgaeMotor(0.3);
     // if (algaeSub.getAlgaeSpeed() >= 2000) {
     //   targetReached = true;
     // }
@@ -51,6 +51,6 @@ public class RunAlgaeIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((algaeSub.getAlgaeIntakePosition() - rotations) > 1000);
+    return algaeSub.getAlgae();
   }
 }

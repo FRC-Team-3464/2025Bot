@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class AlgaeSubsystem extends SubsystemBase {
   /** Creates a new AlgaeSubsystem. */
   private final SparkMax algaePivotMotor = new SparkMax(14, MotorType.kBrushless);
-  private final SparkMax algaeMotor = new SparkMax(9, MotorType.kBrushless);
+  private final SparkMax algaeMotor = new SparkMax(15, MotorType.kBrushless);
   private final SparkMax invertedAlgaeMotor = new SparkMax(16, MotorType.kBrushless);
   private final RelativeEncoder algaePivotEncoder = algaePivotMotor.getEncoder();
   private final RelativeEncoder algaeEncoder = algaeMotor.getEncoder();
@@ -50,7 +50,7 @@ public class AlgaeSubsystem extends SubsystemBase {
       algaePivotMotor.set(0);
     }
     else {
-      algaePivotMotor.set(0.3);
+      algaePivotMotor.set(-0.3);
     }
   }
 
@@ -59,7 +59,7 @@ public class AlgaeSubsystem extends SubsystemBase {
       algaePivotMotor.set(0);
     }
     else {
-      algaePivotMotor.set(-0.3);
+      algaePivotMotor.set(0.3);
     }
   }
 
@@ -67,6 +67,10 @@ public class AlgaeSubsystem extends SubsystemBase {
     if (!(stowLimit.get() || (algaePivotMotor.get() < 0))) {
       algaePivotMotor.set(speed);
     }
+  }
+
+  public void runPivotMotorSimple(double speed) {
+    algaePivotMotor.set(speed);
   }
 
   public void runAlgaeMotor(double speed) {
@@ -89,6 +93,10 @@ public class AlgaeSubsystem extends SubsystemBase {
     return algaeEncoder.getVelocity();
   }
 
+  public boolean getAlgae() {
+    return algaeSensor.get();
+  }
+
   public boolean getExtendedLimit() {
     return !algaeMaxLimit.get();
   }
@@ -104,5 +112,6 @@ public class AlgaeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Algae Pivoter Stow Limit", getStowLimit());
     SmartDashboard.putBoolean("Algae Pivoter Extended Limit", getExtendedLimit());
     SmartDashboard.putNumber("Algae Motor Speed", getAlgaeSpeed());
+    SmartDashboard.putBoolean("algae???", getAlgae());
   }
 }

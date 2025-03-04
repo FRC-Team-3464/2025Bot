@@ -77,8 +77,13 @@ public class RobotContainer {
     
     // Constants.OperatorConstants.button3.onTrue(new DeployAlgaeIntake());
     // Constants.OperatorConstants.button4.onTrue(new RetractAlgaeIntake());
-    OperatorConstants.button3.whileTrue(new SequentialCommandGroup(new DeployAlgaeIntake(), new RunAlgaeIntake()));
-    OperatorConstants.button4.whileTrue(new SequentialCommandGroup(new ReverseAlgaeIntake(), new RetractAlgaeIntake()));
+    // OperatorConstants.button3.whileTrue(new SequentialCommandGroup(new DeployAlgaeIntake(), new RunAlgaeIntake()));
+    // OperatorConstants.button4.whileTrue(new SequentialCommandGroup(new ReverseAlgaeIntake(), new RetractAlgaeIntake()));
+    OperatorConstants.button3.whileTrue(new DeployAlgaeIntake());
+    OperatorConstants.button4.whileTrue(new RetractAlgaeIntake());
+    
+    OperatorConstants.button5.whileTrue(new RunAlgaeIntake());
+    OperatorConstants.button6.whileTrue(new ReverseAlgaeIntake());
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }

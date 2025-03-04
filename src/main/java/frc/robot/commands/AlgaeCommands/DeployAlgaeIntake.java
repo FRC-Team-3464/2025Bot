@@ -26,13 +26,14 @@ public class DeployAlgaeIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    algaeSub.DeployAlgaeIntake();
+    // algaeSub.DeployAlgaeIntake();
+    algaeSub.runPivotMotorSimple(-0.3);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    algaeSub.runPivotMotor(0);
+    algaeSub.runPivotMotorSimple(0);
   }
 
   // Returns true when the command should end.
