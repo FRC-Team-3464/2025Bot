@@ -8,8 +8,14 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 // import frc.robot.commands.SwerveCommand;
+
+// import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.IntakeCoral;
+import frc.robot.commands.ReverseCoralIntake;
+
 import frc.robot.commands.AlgaeCommands.*;
 import frc.robot.subsystems.ExampleSubsystem;
+
 // import frc.robot.subsystems.SwerveSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -71,7 +77,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  
+    Constants.OperatorConstants.button4.whileTrue(new IntakeCoral());
+    Constants.OperatorConstants.button5.whileTrue(new ReverseCoralIntake());
+    
 
     // Constants.OperatorConstants.buttonX.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
     
