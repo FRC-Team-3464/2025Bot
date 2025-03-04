@@ -26,12 +26,14 @@ public class ReverseCoralIntake extends Command {
   @Override
   public void execute() {
     //Tune speed later, through trial & error
-    coralSub.runIntake(-0.5);
+    coralSub.runIntake(0.5);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    coralSub.runIntake(0);
+  }
 
   // Returns true when the command should end.
   @Override

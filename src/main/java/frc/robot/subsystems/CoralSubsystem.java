@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
@@ -12,13 +13,15 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CoralSubsystem extends SubsystemBase {
   /** Creates a new CoralSubsystem. */
   public static CoralSubsystem instance;
-  private final SparkMax coralMotor = new SparkMax(14, MotorType.kBrushless);
-  private final RelativeEncoder coralEncoder = coralMotor.getEncoder();
-  private final DigitalInput coralPhotoElectric = new DigitalInput(6); 
+  private final Spark coralMotor = new Spark(0);
+  // private final RelativeEncoder coralEncoder = coralMotor.getEncoder();
+  private final DigitalInput coralPhotoElectric = new DigitalInput(2); 
 
   public CoralSubsystem() {}
 
@@ -44,6 +47,7 @@ public class CoralSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("coral???", getPhotoElectric());
   } 
 
 }

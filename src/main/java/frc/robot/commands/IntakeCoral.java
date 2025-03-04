@@ -26,7 +26,7 @@ public class IntakeCoral extends Command {
   @Override
   public void execute() {
     // Tune speed later, through trial & error
-    coralSub.runIntake(.5);
+    coralSub.runIntake(-.5);
   }
 
   // Called once the command ends or is interrupted.
