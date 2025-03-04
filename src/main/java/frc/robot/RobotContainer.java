@@ -71,11 +71,11 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-      Constants.OperatorConstants.button7.onTrue(new ElevatorToPosition(0));
-      Constants.OperatorConstants.button8.onTrue(new ElevatorToPosition(10));
-      Constants.OperatorConstants.button9.onTrue(new ElevatorToPosition(20));
-      Constants.OperatorConstants.button10.onTrue(new ElevatorToPosition(30));
-      Constants.OperatorConstants.button11.onTrue(new ElevatorToPosition(40));
+      // Constants.OperatorConstants.button7.onTrue(new ElevatorToPosition(0));
+      // Constants.OperatorConstants.button8.onTrue(new ElevatorToPosition(10));
+      // Constants.OperatorConstants.button9.onTrue(new ElevatorToPosition(20));
+      // Constants.OperatorConstants.button10.onTrue(new ElevatorToPosition(30));
+      // Constants.OperatorConstants.button11.onTrue(new ElevatorToPosition(40));
       Constants.OperatorConstants.pancakeUp.whileTrue(new RunElevator(true));
       Constants.OperatorConstants.pancakeDown.whileTrue(new RunElevator(false));
 

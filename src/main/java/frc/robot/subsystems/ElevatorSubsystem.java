@@ -30,7 +30,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final RelativeEncoder rightEncoder = rightElevator.getEncoder();
 
     // assigning the limit switches
-    private final DigitalInput minElevatorLimit = new DigitalInput(0);
+    private final DigitalInput minElevatorLimit = new DigitalInput(3);
     private final DigitalInput maxElevatorLimit = new DigitalInput(1);
     
     // configures the right motor to be newly configured 
@@ -81,10 +81,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   // setting the default speed of the left elevator at zero while also accounting for limit switches
   public void runElevator(double speed) {
-    if (getMinElevatorLimit()) {
+    if (getMinElevatorLimit() && speed < 0) {
       leftElevator.set(0);
     }
-    else if (getMaxElevatorLimit()) {
+    else if (getMaxElevatorLimit() && speed > 0) {
       leftElevator.set(0);
     }
     else {
