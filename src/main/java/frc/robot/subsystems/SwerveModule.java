@@ -4,6 +4,9 @@
 
 // package frc.robot.subsystems;
 
+// import frc.robot.util.ModuleConstants;
+// import frc.robot.util.ModuleState;
+
 // import com.ctre.phoenix6.configs.CANcoderConfiguration;
 // import com.ctre.phoenix6.configs.CANcoderConfigurator;
 // import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
@@ -18,6 +21,8 @@
 // import frc.robot.util.ModuleConstants;
 // import frc.robot.util.ModuleState;
 
+// import com.ctre.phoenix6.signals.NeutralModeValue;
+// import com.ctre.phoenix6.signals.SensorDirectionValue;
 // import com.revrobotics.RelativeEncoder;
 // import com.revrobotics.spark.ClosedLoopSlot;
 // import com.revrobotics.spark.SparkClosedLoopController;
@@ -34,6 +39,7 @@
 // import edu.wpi.first.math.kinematics.SwerveModulePosition;
 // import edu.wpi.first.math.kinematics.SwerveModuleState;
 // import edu.wpi.first.wpilibj.Encoder;
+
 // import frc.robot.Constants;
 // import frc.robot.Constants.SwerveConstants;
 
@@ -53,6 +59,7 @@
 //     private CANcoderConfiguration angleEncoderConfiguration;
 //     private EncoderConfig turnEncoderConfig;
 //     private SparkMaxConfig sparkMaxConfig;
+//     private SparkMaxConfig turnSparkMaxConfig;
 //     private TalonFXConfiguration driveMotorConfiguration;
 //     private TalonFXConfigurator driveMotorConfigurator;
 //     private CurrentLimitsConfigs driveSupplyLimit;
@@ -97,20 +104,21 @@
 //         else {
 //           driveVelocity.Velocity = desiredState.speedMetersPerSecond / SwerveConstants.driveRevToMeters;
 //           driveVelocity.FeedForward = driveFeedForward.calculate(desiredState.speedMetersPerSecond);
+
 //           driveMotor.setControl(driveVelocity);
 //         }
 //       }
 
 //     public void setAngle(SwerveModuleState desiredState) {
-//         //Prevent rotating module if speed is less then 1%. Prevents Jittering.
-//         if(Math.abs(desiredState.speedMetersPerSecond) <= (SwerveConstants.maxSpeed * 0.01)) {
-//             turnMotor.stopMotor();
-//             return;
+
+//         if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.maxSpeed * 0.001))
+//         {
+//          turnMotor.stopMotor();
+//          return;
 //         }
 //         Rotation2d angle = desiredState.angle;
-//         SparkClosedLoopController controller = turnMotor.getClosedLoopController();
-//         double degreeReference = angle.getDegrees();
-//         controller.setReference(degreeReference, ControlType.kPosition);
+//          SparkClosedLoopController controller = turnMotor.getClosedLoopController();
+//          controller.setReference(angle.getDegrees(), ControlType.kPosition, ClosedLoopSlot.kSlot0);
 //     }
 
 //     private Rotation2d getAngle() {
@@ -142,6 +150,8 @@
 //         return moduleNumber;
 //     }
 
+
+
 //     public void setModuleNumber(int moduleNumber) {
 //         this.moduleNumber = moduleNumber;
 //     }
@@ -157,9 +167,10 @@
 //     }
 
 //     private void configureTurnMotor() {
-//         sparkMaxConfig = new SparkMaxConfig();
+
+//         turnSparkMaxConfig = new SparkMaxConfig();
 //         turnEncoderConfig = new EncoderConfig();
-//         sparkMaxConfig
+//         turnSparkMaxConfig
 //             .smartCurrentLimit(SwerveConstants.angleContinuousCurrentLimit)
 //             .idleMode(SwerveConstants.angleIdleMode)
 //             .inverted(SwerveConstants.angleMotorInvert)
@@ -174,8 +185,7 @@
 //         turnEncoderConfig
 //             .positionConversionFactor(SwerveConstants.DegreesPerTurnRotation)
 //             .velocityConversionFactor(SwerveConstants.DegreesPerTurnRotation / 60); // this is degrees per sec
-//         sparkMaxConfig.encoder.apply(turnEncoderConfig);
-//         turnMotor.configure(sparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+//         turnMotor.configure(turnSparkMaxConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 //     }
 
 //     private void configureDriveMotor(){     
@@ -198,10 +208,10 @@
 //         driveMotorConfiguration.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = SwerveConstants.closedLoopRamp;
 //         driveMotorConfiguration.MotorOutput.Inverted = SwerveConstants.driveMotorInvert;
 
+
 //         driveMotorConfigurator.apply(driveMotorConfiguration);
 //         driveMotorConfigurator.apply(driveSupplyLimit);
 //     }
-
 
 
 // }

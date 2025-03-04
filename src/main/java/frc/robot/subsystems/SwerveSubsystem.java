@@ -7,6 +7,10 @@
 // import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.wpilibj.Timer;
 
+
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+// import com.ctre.phoenix6.hardware.CANcoder;
 // import com.pathplanner.lib.auto.AutoBuilder;
 // import com.pathplanner.lib.config.PIDConstants;
 // import com.pathplanner.lib.config.RobotConfig;
@@ -104,18 +108,19 @@
 //                                 translation.getY(), 
 //                                 rotation)
 //                             );
+
 //     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.SwerveConstants.maxSpeed);
 
 //     for(SwerveModule mod : swerveMods){
 //         mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
 //     }
-// }    
+
 
 //   public SwerveModulePosition[] getModulePositions() {
 //     SwerveModulePosition[] positions = new SwerveModulePosition[4];
 //     for(SwerveModule mod : swerveMods) {
 //         positions[mod.getModuleNumber()] = mod.getPosition();
-//     }
+
 //     return positions;
 //   }
 
@@ -126,7 +131,7 @@
 //     }
 //     return states;
 //   }
-
+=
 //   public Pose2d getPose() {
 //     return swerveOdometry.getPoseMeters();
 //   }
@@ -145,7 +150,7 @@
 //     for(SwerveModule mod : swerveMods){
 //         mod.setDesiredState(desiredStates[mod.moduleNumber], false);
 //     }
-//   }    
+=
 
 //   public void driveRobotRelative(ChassisSpeeds speeds){
 //     SwerveModuleState[] states = Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(speeds);
@@ -163,8 +168,7 @@
 //     return gyro.getRotation2d();
 //   }
 
-//   @Override
-//   public void periodic() {
+
 //     // This method will be called once per scheduler run
 //   }
 // }
