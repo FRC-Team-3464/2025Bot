@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+// import frc.robot.commands.AutoCoralPosition;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PivotToPositionCommand;
@@ -24,7 +25,6 @@ import frc.robot.commands.ReverseCoralIntake;
 import frc.robot.commands.AlgaeCommands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 
-// import frc.robot.subsystems.SwerveSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -59,15 +59,14 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    swerveSub.setDefaultCommand(
+      new SwerveCommand(
+        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
+        () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
+        () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
+        () -> true)
+    );
 
-
-    // swerveSub.setDefaultCommand(
-    //   new SwerveCommand(
-    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
-    //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftX.value), 
-    //     () -> OperatorConstants.xbox.getRawAxis(XboxController.Axis.kRightX.value), 
-    //     () -> false)
-    // );
 
     // autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -97,6 +96,12 @@ public class RobotContainer {
 
       }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+
+  
+
+    // Constants.OperatorConstants.buttonX.whileTrue(new AutoCoralPosition(true));
+    // Constants.OperatorConstants.buttonB.whileTrue(new AutoCoralPosition(false));
+    Constants.OperatorConstants.buttonY.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
     // Constants.OperatorConstants.button2.onTrue(new PivotToPositionCommand(0));
     // Constants.OperatorConstants.button3.onTrue(new PivotToPositionCommand(30));
     // Constants.OperatorConstants.button4.onTrue(new PivotToPositionCommand(50));

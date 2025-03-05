@@ -6,12 +6,17 @@ package frc.robot;
 
 import frc.robot.util.ModuleConstants;
 
+import java.util.Map;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -49,10 +54,10 @@ public final class Constants {
 
     // Swerve kinematics, don't change
      public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-        new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0),
-        new Translation2d(wheelBase / 2.0, -trackWidth / 2.0));
+      new Translation2d(-wheelBase / 2.0, trackWidth / 2.0), // front left
+      new Translation2d(wheelBase / 2.0, trackWidth / 2.0), // front right
+      new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0), // back left
+      new Translation2d(wheelBase / 2.0, -trackWidth / 2.0)); // back right
 
     // gear ratios
     public static final double driveGearRatio = (6.12 / 1.0);
@@ -103,27 +108,50 @@ public final class Constants {
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
 
-    /* Heading PID Values */
-    public static final double headingKP = 4;
-    public static final double headingKI = 0.0;
-    public static final double headingKD = 0;
-    public static final double headingTolerence = 0;
-
-
-    /* Drive Motor Characterization Values 
-     * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-    public static final double driveKS = (0.32 / 12); 
-    public static final double driveKV = (1.51 / 12);
-    public static final double driveKA = (0.27 / 12);
+    public static final double driveKS = (0.32 / 12);
+    public static final double driveKV = (1.988 / 12);
+    public static final double driveKA = (1.0449 / 12);
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 4.0;
+    public static final double kPhysicalMaxSpeed = 5.0;
+    public static final double kMaxTeleDriveSpeed = 4.5;
+    // radians per sec
+    public static final double kPhysicalMaxAngularSpeed = 2 * 2 * Math.PI;
+    public static final double kMaxTeleAngularSpeed = kPhysicalMaxAngularSpeed / 2;
+
+    public static final double kMaxAngularAccelerationSpeed = 4 / Math.PI;
+    public static final double kMaxTeleAngularAccelerationSpeed = kMaxAngularAccelerationSpeed / 2;
     /** Radians per Second */
-    public static final double maxAngularVelocity = 5.0;
 
     public static final double kDeadband = 0.08;
 
+    public static final Map<Integer, Double> distances = Map.of(
+      0, 0.0,
+      1, 1.0,
+      2, 2.0,
+      3, 3.0,
+      4, 4.0
+    );
+
+    public static int targetPosition = 0;
+  }
+
+  public static final class AutoConstants {
+    public static final double kPXController = 1.5;
+    public static final double kPYController = 1;
+    public static final double kPThetaController = 4;
+    
+    public static final double kThetaTolerance = 0;
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
+    new TrapezoidProfile.Constraints(
+      SwerveConstants.kMaxTeleAngularSpeed,
+      SwerveConstants.kMaxTeleAngularAccelerationSpeed
+      );
+
+    public static final PIDController xController = new PIDController(kPXController, 0, 0);
+    public static final PIDController yController = new PIDController(kPYController, 0, 0);
+    public static final ProfiledPIDController rotationController = new ProfiledPIDController(kPThetaController, 0, 0, kThetaControllerConstraints);
   }
   
   public static final class ModConstants {
@@ -131,7 +159,7 @@ public final class Constants {
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 19;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003+90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -140,7 +168,7 @@ public final class Constants {
       public static final int driveMotorID = 3;
       public static final int angleMotorID = 4;
       public static final int canCoderID = 20;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125-90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
         
@@ -149,7 +177,7 @@ public final class Constants {
       public static final int driveMotorID = 5;
       public static final int angleMotorID = 6; 
       public static final int canCoderID = 21;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125-90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -158,9 +186,15 @@ public final class Constants {
       public static final int driveMotorID = 7;
       public static final int angleMotorID = 8;
       public static final int canCoderID = 22;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375+90);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
+  }
+
+  public static class ArmConstants {
+  }
+
+  public static class ElevatorConstants {
   }
   
   public static class OperatorConstants {
