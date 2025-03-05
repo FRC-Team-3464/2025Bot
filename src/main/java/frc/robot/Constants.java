@@ -28,6 +28,10 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  */
 public final class Constants {
 
+  public static class ElevatorConstants {
+    public static double kElevatorGearRatio = 16;
+  }
+
   public static class SwerveConstants {
 
     public static final IdleMode driveIdleMode = IdleMode.kBrake;
@@ -45,10 +49,10 @@ public final class Constants {
 
     // Swerve kinematics, don't change
      public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-        new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
         new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0),
+        new Translation2d(wheelBase / 2.0, -trackWidth / 2.0));
 
     // gear ratios
     public static final double driveGearRatio = (6.12 / 1.0);
@@ -88,14 +92,14 @@ public final class Constants {
     public static final double closedLoopRamp = 0.0;
 
     /* Angle Motor PID Values */
-    public static final double angleKP = 0;
+    public static final double angleKP = 0.01;
     public static final double angleKI = 0;
     public static final double angleKD = 0;
     public static final double angleKF = 0;
 
     /* Drive Motor PID Values */
 
-    public static final double driveKP = 0.1; 
+    public static final double driveKP = 0.03; 
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
 
@@ -123,38 +127,38 @@ public final class Constants {
   }
   
   public static final class ModConstants {
-    public static final class Mod0 { //TODO: This must be tuned to specific robot
+    public static final class Mod0 { //frontLeft
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
-      public static final int canCoderID = 1;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      public static final int canCoderID = 19;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003+90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
         /* Front Right Module - Module 1 */
-    public static final class Mod1 { //TODO: This must be tuned to specific robot
+    public static final class Mod1 { //frontRight
       public static final int driveMotorID = 3;
       public static final int angleMotorID = 4;
-      public static final int canCoderID = 2;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      public static final int canCoderID = 20;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125-90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
         
         /* Back Left Module - Module 2 */
-    public static final class Mod2 { //TODO: This must be tuned to specific robot
+    public static final class Mod2 { //backLeft
       public static final int driveMotorID = 5;
-      public static final int angleMotorID = 6;
-      public static final int canCoderID = 3;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      public static final int angleMotorID = 6; 
+      public static final int canCoderID = 21;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125-90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
         /* Back Right Module - Module 3 */
-    public static final class Mod3 { //TODO: This must be tuned to specific robot
+    public static final class Mod3 { //backRight
       public static final int driveMotorID = 7;
       public static final int angleMotorID = 8;
-      public static final int canCoderID = 4;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      public static final int canCoderID = 22;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375+90);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
   }

@@ -11,7 +11,19 @@ import frc.robot.commands.PivotToPositionCommand;
 import frc.robot.commands.RunPivoterCommand;
 // import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.commands.RunElevator;
+// import frc.robot.commands.SwerveCommand;
+// import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.ElevatorToPosition;
+// import frc.robot.commands.SwerveCommand;
+
+// import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.IntakeCoral;
+import frc.robot.commands.ReverseCoralIntake;
+
+import frc.robot.commands.AlgaeCommands.*;
 import frc.robot.subsystems.ExampleSubsystem;
+
 // import frc.robot.subsystems.SwerveSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -20,7 +32,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -32,7 +47,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // private final SwerveSubsystem swerveSub = SwerveSubsystem.getInstance();
-  private final ArmSubsystem ArmSub = ArmSubsystem.getInstance();
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -44,6 +59,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+
     // swerveSub.setDefaultCommand(
     //   new SwerveCommand(
     //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
@@ -70,6 +87,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+      // Constants.OperatorConstants.button7.onTrue(new ElevatorToPosition(0));
+      // Constants.OperatorConstants.button8.onTrue(new ElevatorToPosition(10));
+      // Constants.OperatorConstants.button9.onTrue(new ElevatorToPosition(20));
+      // Constants.OperatorConstants.button10.onTrue(new ElevatorToPosition(30));
+      // Constants.OperatorConstants.button11.onTrue(new ElevatorToPosition(40));
+      Constants.OperatorConstants.pancakeUp.whileTrue(new RunElevator(true));
+      Constants.OperatorConstants.pancakeDown.whileTrue(new RunElevator(false));
+
+      }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // Constants.OperatorConstants.button2.onTrue(new PivotToPositionCommand(0));
     // Constants.OperatorConstants.button3.onTrue(new PivotToPositionCommand(30));
@@ -79,9 +105,23 @@ public class RobotContainer {
     
     Constants.OperatorConstants.button7.whileTrue(new RunPivoterCommand(false));
     Constants.OperatorConstants.button8.whileTrue(new RunPivoterCommand(true));
+    Constants.OperatorConstants.button4.whileTrue(new IntakeCoral());
+    Constants.OperatorConstants.button5.whileTrue(new ReverseCoralIntake());
+    
+
+    // Constants.OperatorConstants.buttonX.onTrue(new InstantCommand(() -> swerveSub.resetGyro()));
+    
+    // Constants.OperatorConstants.button3.onTrue(new DeployAlgaeIntake());
+    // Constants.OperatorConstants.button4.onTrue(new RetractAlgaeIntake());
+    // OperatorConstants.button3.whileTrue(new SequentialCommandGroup(new DeployAlgaeIntake(), new RunAlgaeIntake()));
+    // OperatorConstants.button4.whileTrue(new SequentialCommandGroup(new ReverseAlgaeIntake(), new RetractAlgaeIntake()));
+    OperatorConstants.button3.whileTrue(new DeployAlgaeIntake());
+    OperatorConstants.button4.whileTrue(new RetractAlgaeIntake());
+    
+    OperatorConstants.button5.whileTrue(new RunAlgaeIntake());
+    OperatorConstants.button6.whileTrue(new ReverseAlgaeIntake());
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -90,9 +130,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    return null;
 
     // return autoChooser.getSelected();
-    return null;
+
     // return Autos.exampleAuto(exampleSubsystem);
   }
 }
