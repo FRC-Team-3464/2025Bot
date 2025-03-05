@@ -5,14 +5,17 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkMax;
-
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.ExponentialProfile.ProfileTiming;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,6 +27,8 @@ public class ArmSubsystem extends SubsystemBase {
   private final SparkMax leftPivot = new SparkMax(11, MotorType.kBrushless);
   private final SparkMax rightPivot = new SparkMax(12, MotorType.kBrushless);
 
+  private SparkClosedLoopController pivotController = leftPivot.getClosedLoopController();
+
   private final DutyCycleEncoder absPivoterEncoder = new DutyCycleEncoder(3);
   private static ArmSubsystem instance = null;
 
@@ -32,13 +37,33 @@ public class ArmSubsystem extends SubsystemBase {
 
   private final DigitalInput minPivotSwitch = new DigitalInput(4);
   private final DigitalInput maxPivotSwitch = new DigitalInput(5);
+
+  public static final SparkMaxConfig leftSparkMaxConfig = new SparkMaxConfig();
+
+  private RelativeEncoder pivotEncoder = leftPivot.getEncoder();
+
+  static {
+    leftSparkMaxConfig
+      .closedLoop
+      .pid(0, 0, 0, ClosedLoopSlot.kSlot0)
+      .maxMotion
+        .maxVelocity(2000)
+        .maxAcceleration(3750)
+        .allowedClosedLoopError(0.2270833333);
+
+    leftSparkMaxConfig.smartCurrentLimit(30);
+  }
+
   
-  private SparkMaxConfig rightPivotConfig;
+  private SparkMaxConfig rightSparkMaxConfig;
+
 
   public ArmSubsystem() {
-    rightPivotConfig = new SparkMaxConfig();
-    rightPivotConfig.follow(11, true);
-    rightPivot.configure(rightPivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    leftPivot.configure(leftSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    rightSparkMaxConfig = new SparkMaxConfig();
+    rightSparkMaxConfig.follow(11, true);
+    rightPivot.configure(rightSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
   }
 
@@ -78,6 +103,10 @@ public class ArmSubsystem extends SubsystemBase {
     else {
       leftPivot.set(0);
     }
+  }
+
+  public void PIDPivotToPosition(double tatrget) {
+    pivotController.setReference(tatrget, ControlType.kMAXMotionPositionControl);
   }
 
   public double getAbsPivotPosition() {
