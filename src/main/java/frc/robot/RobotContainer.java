@@ -10,6 +10,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PivotToPositionCommand;
 import frc.robot.commands.RunPivoterCommand;
+import frc.robot.commands.SwerveCommand;
 // import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.RunElevator;
@@ -125,6 +126,9 @@ public class RobotContainer {
     
     OperatorConstants.button5.whileTrue(new RunAlgaeIntake());
     OperatorConstants.button6.whileTrue(new ReverseAlgaeIntake());
+
+    OperatorConstants.button11.onTrue(new PIDPivotToPosition(40.875));
+    OperatorConstants.button12.onTrue(new PIDPivotToPosition(0));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
 
