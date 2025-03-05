@@ -7,6 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.PivotToPositionCommand;
+import frc.robot.commands.RunPivoterCommand;
+// import frc.robot.commands.SwerveCommand;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.RunElevator;
 // import frc.robot.commands.SwerveCommand;
 // import frc.robot.subsystems.SwerveSubsystem;
@@ -56,6 +60,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
+
     // swerveSub.setDefaultCommand(
     //   new SwerveCommand(
     //     () -> Constants.OperatorConstants.xbox.getRawAxis(XboxController.Axis.kLeftY.value),
@@ -92,6 +97,14 @@ public class RobotContainer {
 
       }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    // Constants.OperatorConstants.button2.onTrue(new PivotToPositionCommand(0));
+    // Constants.OperatorConstants.button3.onTrue(new PivotToPositionCommand(30));
+    // Constants.OperatorConstants.button4.onTrue(new PivotToPositionCommand(50));
+    // Constants.OperatorConstants.button5.onTrue(new PivotToPositionCommand(70));
+    // Constants.OperatorConstants.button6.onTrue(new PivotToPositionCommand(90));
+    
+    Constants.OperatorConstants.button7.whileTrue(new RunPivoterCommand(false));
+    Constants.OperatorConstants.button8.whileTrue(new RunPivoterCommand(true));
     Constants.OperatorConstants.button4.whileTrue(new IntakeCoral());
     Constants.OperatorConstants.button5.whileTrue(new ReverseCoralIntake());
     
