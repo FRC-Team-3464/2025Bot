@@ -103,7 +103,7 @@ public class SwerveModule {
       }
 
     public void setAngle(SwerveModuleState desiredState) {
-        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.kMaxTeleDriveSpeed * 0.01))
+        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.SwerveConstants.kMaxTeleDriveSpeed * 0.001))
         {
          turnMotor.stopMotor();
          return;

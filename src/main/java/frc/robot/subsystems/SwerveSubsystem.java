@@ -121,6 +121,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     for(SwerveModule mod : swerveMods){
         mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        // System.out.println(mod.moduleNumber + "    "+ mod.getCanCoder().getDegrees());
     }
   }
 

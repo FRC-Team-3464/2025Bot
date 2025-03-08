@@ -5,16 +5,26 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.DeviceIdentifier;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,16 +35,20 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final SparkMax leftElevator = new SparkMax(9, MotorType.kBrushless); 
     private final SparkMax rightElevator = new SparkMax(10, MotorType.kBrushless);
 
-    private final DutyCycleEncoder absElevatorEncoder = new DutyCycleEncoder(2);
     private final RelativeEncoder leftEncoder = leftElevator.getEncoder();
     private final RelativeEncoder rightEncoder = rightElevator.getEncoder();
 
+    private final ProfiledPIDController elevatorController = new ProfiledPIDController(0.8, 0, 0, new TrapezoidProfile.Constraints(120, 800));
+    private final ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(.081, .254, 1, .01); // to be used in the future hopefully
+
+
     // assigning the limit switches
-    private final DigitalInput minElevatorLimit = new DigitalInput(3);
+    private final DigitalInput minElevatorLimit = new DigitalInput(8);
     private final DigitalInput maxElevatorLimit = new DigitalInput(1);
     
     // configures the right motor to be newly configured 
     private SparkMaxConfig rightSparkMaxConfig = new SparkMaxConfig();
+    private SparkMaxConfig leftSparkMaxConfig = new SparkMaxConfig();
 
 
     Boolean LeftResistance;
@@ -43,9 +57,12 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public ElevatorSubsystem() {
     // setting resistance/directions both motors will run in  
+    leftEncoder.setPosition(0);
+    elevatorController.setTolerance(1);
+    
     LeftResistance = false;
     RightResistance = false; 
-    // configuring the right sparkmax to follow the left elevator motor
+
     rightSparkMaxConfig.follow(leftElevator, true);
     // sets the right elevator motor to actually be configured to the code that sets the configuration
     rightElevator.configure(rightSparkMaxConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -64,7 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void setElevateTarget(double target) {
     // checking which direction the elevator has to travel in to reach the target parameter after accounting for limit switches
         System.out.println("setElevateTarget should be running");
-        System.out.println(Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()));
+        System.out.println(Math.abs(Constants.ArmevatorConstants.kElevatorGearRatio * (target) - getElevatorPosition()));
 
     if (getMinElevatorLimit()) {
       leftElevator.set(0);
@@ -74,15 +91,15 @@ public class ElevatorSubsystem extends SubsystemBase {
       leftElevator.set(0);
       System.out.println("speed set to 0 because top limit switch");
     }
-    else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) < 5) {
+    else if (Math.abs(Constants.ArmevatorConstants.kElevatorGearRatio * (target) - getElevatorPosition()) < 5) {
       leftElevator.set(0);
     }
-    else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) > 5 && getElevatorHeight() < target) {
-      leftElevator.set(0.3);
+    else if (Math.abs(Constants.ArmevatorConstants.kElevatorGearRatio * (target) - getElevatorPosition()) > 5 && getElevatorPosition() < target) {
+      leftElevator.set(0.1);
       System.out.println("speed set to 0.6");
     }
-    else if (Math.abs(Constants.ElevatorConstants.kElevatorGearRatio * (target) - getRelativeElevatorPosition()) > 5 && getElevatorHeight() > target) {
-      leftElevator.set(-0.3);
+    else if (Math.abs(Constants.ArmevatorConstants.kElevatorGearRatio * (target) - getElevatorPosition()) > 5 && getElevatorPosition() > target) {
+      leftElevator.set(-0.1);
       System.out.println("speed set to -0.6");
     }
   }
@@ -98,24 +115,26 @@ public class ElevatorSubsystem extends SubsystemBase {
     else {
       leftElevator.set(speed);
     }
+    System.out.println(speed);
   }
 
-  public double getRelativeElevatorPosition() {
-    // gets number of rotations of left relative encoder
-    return leftEncoder.getPosition();
+  public void setElevatorPosition(double position) {
+    leftEncoder.setPosition(position);
   }
+
+  public void setElevatorTarget(double target) {
+    elevatorController.setGoal(target);
+    // leftElevator.setVoltage(elevatorFeedforward.calculate(elevatorController.getSetpoint().velocity));
+    leftElevator.setVoltage(elevatorController.calculate(leftEncoder.getPosition()));
+  }
+
 
   public double getElevatorPosition() {
     // gets elevator position based on number of rotations of duty cycle encoder
     return leftEncoder.getPosition();
   }
 
-  public double getElevatorHeight() {
-    // gets elevator height in inches based on number of rotations of the duty cycle encoder
-    double rotations = getRelativeElevatorPosition();
-    return (rotations/Constants.ElevatorConstants.kElevatorGearRatio);
-    // change the kElevatorGearRatio later to get from CAD
-  }
+
 
   public boolean getMaxElevatorLimit() {
     // checks if maximum limit switch is hit
@@ -130,7 +149,20 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putBoolean("Min Elevator Limit", getMinElevatorLimit());
     SmartDashboard.putBoolean("Max Elevator Limit", getMaxElevatorLimit());
+    SmartDashboard.putNumber("Elevator Position",getElevatorPosition());
+    if (getMinElevatorLimit()) {
+      leftEncoder.setPosition(0);
+    };
+    if (getMaxElevatorLimit()) {
+      leftEncoder.setPosition(81);
+    }
+    if (getElevatorPosition() >= 81) {
+      runElevator(0.02);
+    }
+    SmartDashboard.putNumber("Elevator Draw", leftElevator.getOutputCurrent());
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Elevator Speed", leftEncoder.getVelocity());
+    SmartDashboard.putNumber("Elevator Voltage", leftElevator.getAppliedOutput()*RobotController.getBatteryVoltage());
   }
 
   

@@ -20,21 +20,21 @@ public class AlgaeSubsystem extends SubsystemBase {
   /** Creates a new AlgaeSubsystem. */
   private final SparkMax algaePivotMotor = new SparkMax(14, MotorType.kBrushless);
   private final SparkMax algaeMotor = new SparkMax(15, MotorType.kBrushless);
-  private final SparkMax invertedAlgaeMotor = new SparkMax(16, MotorType.kBrushless);
+
   private final RelativeEncoder algaePivotEncoder = algaePivotMotor.getEncoder();
   private final RelativeEncoder algaeEncoder = algaeMotor.getEncoder();
   private SparkMaxConfig algaePivotConfig;
 
   private final DigitalInput stowLimit = new DigitalInput(7);
-  private final DigitalInput algaeMaxLimit = new DigitalInput(8);
+  // private final DigitalInput algaeMaxLimit = new DigitalInput(8);
+  private final DigitalInput algaeMaxLimit = new DigitalInput(0);
+
   private final DigitalInput algaeSensor = new DigitalInput(9);
   
   public static AlgaeSubsystem instance = new AlgaeSubsystem();
   
   public AlgaeSubsystem() {
-    // algaePivotConfig = new SparkMaxConfig();
-    // algaePivotConfig.follow(14, true);
-    // invertedAlgaeMotor.configure(algaePivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
   }
 
   public static AlgaeSubsystem getInstance() {
@@ -94,7 +94,7 @@ public class AlgaeSubsystem extends SubsystemBase {
   }
 
   public boolean getAlgae() {
-    return algaeSensor.get();
+    return !algaeSensor.get();
   }
 
   public boolean getExtendedLimit() {
