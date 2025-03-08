@@ -33,8 +33,20 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  */
 public final class Constants {
 
-  public static class ElevatorConstants {
-    public static double kElevatorGearRatio = 16;
+  public static class ArmevatorConstants {
+    public static double kElevatorGearRatio = 20;
+
+    // table with index, elevator, and arm positions
+    public static double[][] positions  = {
+      {0, 0, 0}, // stowed position
+      {1, 22.38, -4.14}, // intake position 3.714
+      {2, 33.666, 4.4}, // L2 position
+      {3, 0, 60.62}, // L3 position
+      {4, 67.1415, 65.144} // L4 position
+    };
+
+    public static double kElevatorDangerPosition = 25;
+    public static double kArmDangerPosition = 3.714;
   }
 
   public static class SwerveConstants {
@@ -54,10 +66,10 @@ public final class Constants {
 
     // Swerve kinematics, don't change
      public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(-wheelBase / 2.0, trackWidth / 2.0), // front left
-      new Translation2d(wheelBase / 2.0, trackWidth / 2.0), // front right
-      new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0), // back left
-      new Translation2d(wheelBase / 2.0, -trackWidth / 2.0)); // back right
+      new Translation2d(wheelBase / 2.0, trackWidth / 2.0), // front left
+      new Translation2d(wheelBase / 2.0, -trackWidth / 2.0), // front right
+      new Translation2d(-wheelBase / 2.0, trackWidth / 2.0), // back left
+      new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0)); // back right
 
     // gear ratios
     public static final double driveGearRatio = (6.12 / 1.0);
@@ -154,12 +166,13 @@ public final class Constants {
     public static final ProfiledPIDController rotationController = new ProfiledPIDController(kPThetaController, 0, 0, kThetaControllerConstraints);
   }
   
+
   public static final class ModConstants {
     public static final class Mod0 { //frontLeft
       public static final int driveMotorID = 1;
       public static final int angleMotorID = 2;
       public static final int canCoderID = 19;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(239.67773437500003);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(238.79882812499997-180);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -168,7 +181,7 @@ public final class Constants {
       public static final int driveMotorID = 3;
       public static final int angleMotorID = 4;
       public static final int canCoderID = 20;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(25.3125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(207.158203125-180);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
         
@@ -177,7 +190,7 @@ public final class Constants {
       public static final int driveMotorID = 5;
       public static final int angleMotorID = 6; 
       public static final int canCoderID = 21;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.5078125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(216.298828125-180);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
@@ -186,16 +199,12 @@ public final class Constants {
       public static final int driveMotorID = 7;
       public static final int angleMotorID = 8;
       public static final int canCoderID = 22;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(114.9609375);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(296.806640625);
       public static final ModuleConstants constants = new ModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
   }
 
-  public static class ArmConstants {
-  }
 
-  public static class ElevatorConstants {
-  }
   
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
